@@ -1,0 +1,83 @@
+import sys
+data = open(sys.argv[1])
+
+
+xlabel = []
+for filename in data:
+        filename = filename.rstrip("\n")  # 文件名 去除 回车键
+        legend = filename.split('.')[0]     # 每一个文件 对应一个 legend
+        for line in open(filename):      # line = 每一行
+                lines = line.split()      # 每一行 是一个小列表
+                #legend1 = legend +  "-" + lines[0]
+                legend1 = legend.split('.')[0]
+                print(legend1)
+
+                #print (legend)
+                ratio = 1-float(lines[2])    # 肯定会用到列表的 某些元素
+                if int(lines[-1]) > 5000:
+                    continue
+                if lines[-1] not in xlabel:
+                    xlabel.append(lines[-1])
+                label2ratios.setdefault(legend1,[]).append(ratio)  一个 legend对应于 一个 列表 = 数据
+
+print(label2ratios)
+
+
+
+##################
+python 字典的 setdefault用法
+
+
+>>> a={}
+>>> a['key']='123'
+>>> print (a)
+{'key': '123'}
+>>> print (a.setdefault('key','456'))  #显示a这个字典的'key'值的内容,因为字典有，所以不会去设置它
+123
+ 
+>>> print (a.setdefault('key1','456')) #显示a这个字典的'key1'值的内容，因为字典没有，所以设置为456了
+456
+>>> a
+{'key1': '456', 'key': '123'}
+————————————————
+版权声明：本文为CSDN博主「Yatere」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+原文链接：https://blog.csdn.net/yatere/article/details/6701761
+
+{'ENCODE_H3K36me3-peak': [0.0005251362765619216, 0.08951724443984233, 0.12548538124154052]
+ 'H3K36me3-peak': [0.00025807973926572636, 0.053687959474107205, 0.07431221749485684]
+ }
+ 一个文件名字作为键=legend=键
+ 每一行 一个PTM长度 = 值 是一个列表 [1,2,3,4,5,6]
+ 所以 常用的是 键：列表
+ 键：列表
+ 
+ 对应 一个文件：一组数据
+ 一个文件：一组数据
+ 
+ 
+ 
+ ###################################
+ label2ratios = {'ENCODE_H3K36me3-peak': [0.0005251362765619216, 0.08951724443984233, 0.12548538124154052],'H3K36me3-peak': [0.00025807973926572636, 0.053687959474107205, 0.07431221749485684]}
+
+
+for legend in label2ratios:
+
+	a = legend.split("-")[::-1][1:2]
+	print(a)
+
+	legend_mo = "-".join(a)
+	print(legend_mo)
+  
+  
+ ['ENCODE_H3K36me3']
+ENCODE_H3K36me3
+['H3K36me3']
+H3K36me3
+
+所以 相当于 把列表 变成了 字符 本来就一个元素
+plt.plot(xx,label2ratios[legend],'-o',lw=4,color=colors[count],markersize=10,label=legend_mo)
+
+
+只是为了 legend  label 服务 
+
+ 
